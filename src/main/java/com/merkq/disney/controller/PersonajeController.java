@@ -2,7 +2,10 @@ package com.merkq.disney.controller;
 
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.merkq.disney.dao.PersonajeDao;
 import com.merkq.disney.model.Personaje;
-import com.merkq.disney.repository.PersonajeRepository;
+import com.merkq.disney.service.PersonajeService;
 
 
 @RestController
@@ -26,39 +30,39 @@ import com.merkq.disney.repository.PersonajeRepository;
 public class PersonajeController {
 	
 	@Autowired
-	PersonajeRepository repo;
+	PersonajeService service;
 	
 	@GetMapping
-	public List<Personaje> getPersonajes() {
-		return repo.findAll();
+	public List<PersonajeDao> getPersonajes() {
+		return service.getPersonajes();
 	}
 	
 	
 	@PostMapping("/save")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void save(@RequestBody Personaje personaje) {
-
-		repo.save(personaje);
+		System.out.println(personaje);
+		service.save(personaje);
 		
 	}
 	
 	
 	@GetMapping("/{id}")
 	public Personaje getById(@PathVariable int id) {
-		System.out.println(	repo.getById(id));
-		return repo.getById(id);
+		System.out.println(id);
+		return service.getById(id);
 	}
 	
 	@PutMapping("/update")
 	public void update(@RequestBody Personaje personaje) {
 
-		repo.save(personaje);
+		service.save(personaje);
 		
 	}
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable int id) {
 		System.out.println(	id);
-		 repo.deleteById(id);
+		 service.delete(id);
 	}
 
 	

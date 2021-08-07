@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.merkq.disney.model.Pelicula;
-import com.merkq.disney.model.Personaje;
 import com.merkq.disney.repository.PeliculaRepository;
+import com.merkq.disney.service.PeliculaService;
 
 @RestController
 @RequestMapping("/movies")
@@ -22,36 +22,34 @@ public class PeliculaController {
 	
 	
 	@Autowired
-	PeliculaRepository repo;
+	PeliculaService service;
 	
 	
 	@GetMapping
 	public List<Pelicula> getAll(){
-		return repo.findAll();
-	}
+		return service.getPeliculas();
+		}
 	
 	@PostMapping("/save")
 	public void save(@RequestBody Pelicula pelicula) {
-		repo.save(pelicula);
+		service.save(pelicula);
 	}
 	
 
 	@GetMapping("/{id}")
 	public Pelicula getById(@PathVariable int id) {
-		System.out.println(	repo.getById(id));
-		return repo.getById(id);
+		return service.getById(id);
 	}
 	
 	@PutMapping("/update")
 	public void update(@RequestBody Pelicula pelicula) {
 
-		repo.save(pelicula);
+		service.update(pelicula);
 		
 	}
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable int id) {
-		System.out.println(	id);
-		 repo.deleteById(id);
+		service.delete(id);
 	}
 
 
