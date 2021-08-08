@@ -49,5 +49,10 @@ public class Pelicula {
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JsonIgnoreProperties("peliculas")
 	private List<Personaje> personajes;
+	
+	
+	public PeliculaDao toDao() {
+		return new PeliculaDao(titulo,imagen,fechaCreacion);
+	}
 
 }

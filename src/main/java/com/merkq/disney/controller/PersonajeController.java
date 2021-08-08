@@ -2,6 +2,7 @@ package com.merkq.disney.controller;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,9 +34,32 @@ public class PersonajeController {
 	@Autowired
 	PersonajeService service;
 	
-	@GetMapping
+	/*@GetMapping
 	public List<PersonajeDao> getPersonajes() {
 		return service.getPersonajes();
+	}
+	*/
+	
+	@GetMapping
+	public List<PersonajeDao> getPersonajes(@RequestParam Map<String, String> reqParam) {
+		
+		String name=reqParam.getOrDefault("name", null);
+		int age=Integer.parseInt(reqParam.getOrDefault("age", "0"));
+		int idMovie=Integer.parseInt(reqParam.getOrDefault("movies", "0"));
+		if(name!=null)
+			return service.getPersonajeByNombre(name);//service.getPersonajeByNombre();
+		else
+			if(age!=0)
+			return service.getPersonajeByEdad(age);
+			else 
+				if(idMovie!=0)
+					return service.getPersonajeByPelicula(idMovie);
+				else
+					return service.getPersonajes();
+					
+					
+		
+		
 	}
 	
 	

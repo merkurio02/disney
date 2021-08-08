@@ -21,9 +21,17 @@ public class PeliculaServiceImp implements PeliculaService {
 	private PeliculaRepository repo;
 	
 	@Override
-	public List<Pelicula> getPeliculas() {
-		List<Pelicula> peliculas = new ArrayList<Pelicula>();
-		repo.findAll().forEach(peliculas::add);
+	public List<PeliculaDao> getPeliculas() {
+		List<PeliculaDao> peliculas = new ArrayList<PeliculaDao>();
+		repo.findAll().forEach(x->peliculas.add(x.toDao()));
+		return peliculas;
+	}
+	
+	@Override
+	public List<PeliculaDao> getPeliculasByTitulo(String titulo) {
+		// TODO Auto-generated method stub
+		List<PeliculaDao> peliculas = new ArrayList<PeliculaDao>();
+		repo.findByTitulo(titulo).forEach(x->peliculas.add(x.toDao()));
 		return peliculas;
 	}
 
@@ -51,5 +59,9 @@ public class PeliculaServiceImp implements PeliculaService {
 		repo.deleteById(id);
 		
 	}
+
+	
+
+	
 
 }

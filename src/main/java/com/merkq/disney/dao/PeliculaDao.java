@@ -16,13 +16,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PeliculaDao {
-	private int id;
 	private String titulo;
 	private String imagen;
 	private Date fechaCreacion;
-	private double calificacion;
 	
-	private List<PersonajeDao> personajes;
 	
 	
 }
