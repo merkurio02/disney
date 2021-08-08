@@ -8,10 +8,12 @@ import com.merkq.disney.model.Personaje;
 
 public interface PeliculaService {
 
-	public List<PeliculaDao> getPeliculas();
+	public List<PeliculaDao> findAll();
 	
 
-	public List<PeliculaDao> getPeliculasByTitulo(String titulo);
+	public List<PeliculaDao> findByTitulo(String titulo);
+	
+	public List<PeliculaDao> findByGenero(int id);
 	
 	public Pelicula getById(int id);
 	public void save(Pelicula pelicula);

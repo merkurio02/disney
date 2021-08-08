@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.merkq.disney.dao.PeliculaDao;
+import com.merkq.disney.model.Genero;
 import com.merkq.disney.model.Pelicula;
 import com.merkq.disney.model.Personaje;
+import com.merkq.disney.repository.GeneroRepository;
 import com.merkq.disney.repository.PeliculaRepository;
 import com.merkq.disney.service.PeliculaService;
 
@@ -19,16 +21,18 @@ public class PeliculaServiceImp implements PeliculaService {
 
 	@Autowired
 	private PeliculaRepository repo;
+	@Autowired
+	private GeneroRepository repoGenero;
 	
 	@Override
-	public List<PeliculaDao> getPeliculas() {
+	public List<PeliculaDao> findAll() {
 		List<PeliculaDao> peliculas = new ArrayList<PeliculaDao>();
 		repo.findAll().forEach(x->peliculas.add(x.toDao()));
 		return peliculas;
 	}
 	
 	@Override
-	public List<PeliculaDao> getPeliculasByTitulo(String titulo) {
+	public List<PeliculaDao> findByTitulo(String titulo) {
 		// TODO Auto-generated method stub
 		List<PeliculaDao> peliculas = new ArrayList<PeliculaDao>();
 		repo.findByTitulo(titulo).forEach(x->peliculas.add(x.toDao()));
@@ -58,6 +62,17 @@ public class PeliculaServiceImp implements PeliculaService {
 	public void delete(int id) {
 		repo.deleteById(id);
 		
+	}
+
+
+	@Override
+	public List<PeliculaDao> findByGenero(int id) {
+		
+		List<PeliculaDao> peliculas = new ArrayList<PeliculaDao>();
+		 Optional<Genero> genero= repoGenero.findById(id);
+		 if(genero.isPresent())
+			 genero.get().getPeliculas().forEach(x-> peliculas.add(x.toDao()));
+		return peliculas ;
 	}
 
 	

@@ -36,18 +36,18 @@ public class PeliculaController {
 		
 		if(name!=null)
 			//segun el titulo
-			return service.getPeliculasByTitulo(name);
+			return service.findByTitulo(name);
 		else
 			if(genre>=0) {
 				//segun el genero
-				return null;
+				return service.findByGenero(genre);
 			}
 			else
 				if(order!=null)
 					//el orden
 					return null;
 				else
-		return service.getPeliculas();
+		return service.findAll();
 		}
 	
 	@PostMapping("/save")
